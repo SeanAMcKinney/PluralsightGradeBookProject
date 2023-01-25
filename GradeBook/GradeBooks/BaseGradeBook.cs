@@ -14,11 +14,14 @@ namespace GradeBook.GradeBooks
         public string Name { get; set; }
         public List<Student> Students { get; set; }
         public GradeBookType Type { get; set; }
+        public bool IsWeighted { get; set; }
 
-        public BaseGradeBook(string name)
+        public BaseGradeBook(string name, bool isWeighted)
         {
             Name = name;
             Students = new List<Student>();
+            IsWeighted = isWeighted;
+
         }
 
         public void AddStudent(Student student)
@@ -110,15 +113,50 @@ namespace GradeBook.GradeBooks
             switch (letterGrade)
             {
                 case 'A':
-                    return 4;
+                    if (studentType == StudentType.Honors || studentType == StudentType.Honors)
+                    {
+                        return 5;
+                    }
+                    else
+                    {
+                        return 4;
+                    }
                 case 'B':
-                    return 3;
+                    if (studentType == StudentType.Honors || studentType == StudentType.Honors)
+                    {
+                        return 4;
+                    }
+                    else
+                    {
+                        return 3;
+                    }
                 case 'C':
-                    return 2;
+                    if (studentType == StudentType.Honors || studentType == StudentType.Honors)
+                    {
+                        return 3;
+                    }
+                    else
+                    {
+                        return 2;
+                    }
                 case 'D':
-                    return 1;
+                    if (studentType == StudentType.Honors || studentType == StudentType.Honors)
+                    {
+                        return 2;
+                    }
+                    else
+                    {
+                        return 1;
+                    }
                 case 'F':
-                    return 0;
+                    if (studentType == StudentType.Honors || studentType == StudentType.Honors)
+                    {
+                        return 1;
+                    }
+                    else
+                    {
+                        return 0;
+                    }
             }
             return 0;
         }
@@ -264,7 +302,7 @@ namespace GradeBook.GradeBooks
                              from type in assembly.GetTypes()
                              where type.FullName == "GradeBook.GradeBooks.StandardGradeBook"
                              select type).FirstOrDefault();
-            
+
             return JsonConvert.DeserializeObject(json, gradebook);
         }
     }
