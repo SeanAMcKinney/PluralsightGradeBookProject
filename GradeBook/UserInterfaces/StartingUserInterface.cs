@@ -6,21 +6,21 @@ namespace GradeBook.UserInterfaces
     public static class StartingUserInterface
     {
         public static bool Quit = false;
-        public static void CommandLoop(bool isWeighted)
+        public static void CommandLoop()
         {
             while (!Quit)
             {
                 Console.WriteLine(string.Empty);
                 Console.WriteLine(">> What would you like to do?");
                 var command = Console.ReadLine().ToLower();
-                CommandRoute(command, isWeighted);
+                CommandRoute(command);
             }
         }
 
-        public static void CommandRoute(string command, bool isWeighted)
+        public static void CommandRoute(string command)
         {
             if (command.StartsWith("create"))
-                CreateCommand(command, isWeighted);
+                CreateCommand(command);
             else if (command.StartsWith("load"))
                 LoadCommand(command);
             else if (command == "help")
@@ -31,15 +31,21 @@ namespace GradeBook.UserInterfaces
                 Console.WriteLine("{0} was not recognized, please try again.", command);
         }
 
-        public static void CreateCommand(string command, bool isWeighted)
+        public static void CreateCommand(string command)
         {
             var parts = command.Split(' ');
             if (parts.Length != 4)
             {
-                Console.WriteLine("Command not valid, Create requires a name and type of gradebook, if it's weighted (true / false).");
+                Console.WriteLine("Command not valid, Create requires a name, type of gradebook, if it's weighted (true / false).");
                 return;
             }
-            var name = parts[3];
+            var name = parts[1];
+            var type = parts[2];
+
+            var isWeighted = false;
+            if (parts[3] == "true")
+                isWeighted = true;
+
             BaseGradeBook gradeBook;
             if (name == "standard")
             {
