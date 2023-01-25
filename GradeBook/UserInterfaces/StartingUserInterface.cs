@@ -6,21 +6,21 @@ namespace GradeBook.UserInterfaces
     public static class StartingUserInterface
     {
         public static bool Quit = false;
-        public static void CommandLoop()
+        public static void CommandLoop(bool isWeighted)
         {
             while (!Quit)
             {
                 Console.WriteLine(string.Empty);
                 Console.WriteLine(">> What would you like to do?");
                 var command = Console.ReadLine().ToLower();
-                CommandRoute(command);
+                CommandRoute(command, isWeighted);
             }
         }
 
-        public static void CommandRoute(string command)
+        public static void CommandRoute(string command, bool isWeighted)
         {
             if (command.StartsWith("create"))
-                CreateCommand(command);
+                CreateCommand(command, isWeighted);
             else if (command.StartsWith("load"))
                 LoadCommand(command);
             else if (command == "help")
